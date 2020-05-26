@@ -13,5 +13,10 @@ namespace SQLToolApp
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            SQLAppLib.SQLAppWaitingDialog.ShowDialog();
+            base.OnStartup(e);
+        }
     }
 }
