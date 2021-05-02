@@ -1,0 +1,74 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"   x:Class="SQLToolApp.Views.ResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:SQLToolApp.Views"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:c="clr-namespace:SQLToolApp.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <c:MultiBindingValueConverter x:Key="myMultiBindingValue"/>
+        <c:GridColumnTemplate x:Key="myColumnTemplate"/>
+    </UserControl.Resources>
+    <Grid Margin="0,3,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <dx:DXTabControl x:Name="tabControl" Grid.Row="0" Margin="0" Padding="0" ItemsSource="{Binding lstTabItems}">
+            <dx:DXTabControl.View>
+                <dx:TabControlMultiLineView HeaderLocation="Top" HideButtonShowMode="InHeaderArea" NewButtonShowMode="NoWhere" RemoveTabItemsOnHiding="True" ShowHeaderMenu="False" Tag="Stretch"/>
+            </dx:DXTabControl.View>
+            <!--<dx:DXTabControl.ItemTemplate>
+                <DataTemplate>
+                    <dxg:GridControl ItemsSource="{Binding DataSource}" AutoGenerateColumns="AddNew" Margin="0" AutoGeneratingColumn="DgvDataResult_AutoGeneratingColumn">
+                        <dxg:GridControl.View>
+                            <dxg:TableView ShowDataNavigator="True" AllowColumnFiltering="True" ShowAutoFilterRow="True" AllowEditing="False" x:Name="dgvResultView" SearchPanelFindFilter="Contains" SearchPanelCriteriaOperatorType="And">
+                                <dxg:TableView.InputBindings>
+                                    <KeyBinding Key="F" Command="{Binding KeyBindingCommand}">
+                                        <KeyBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource myMultiBindingValue}" ConverterParameter="None+F">
+                                                <Binding ElementName="dgvResultView"/>
+                                            </MultiBinding>
+                                        </KeyBinding.CommandParameter>
+                                    </KeyBinding>
+                                    <KeyBinding Modifiers="Ctrl" Key="M" Command="{Binding KeyBindingCommand}">
+                                        <KeyBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource myMultiBindingValue}" ConverterParameter="Control+M">
+                                                <Binding ElementName="dgvResultView"/>
+                                            </MultiBinding>
+                                        </KeyBinding.CommandParameter>
+                                    </KeyBinding>
+                                    <KeyBinding Modifiers="Ctrl" Key="H" Command="{Binding KeyBindingCommand}">
+                                        <KeyBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource myMultiBindingValue}" ConverterParameter="Control+H">
+                                                <Binding ElementName="dgvResultView"/>
+                                            </MultiBinding>
+                                        </KeyBinding.CommandParameter>
+                                    </KeyBinding>
+                                    <KeyBinding Modifiers="Alt" Key="C" Command="{Binding KeyBindingCommand}">
+                                        <KeyBinding.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource myMultiBindingValue}" ConverterParameter="Alt+C">
+                                                <Binding ElementName="dgvResultView"/>
+                                            </MultiBinding>
+                                        </KeyBinding.CommandParameter>
+                                    </KeyBinding>
+                                </dxg:TableView.InputBindings>
+                            </dxg:TableView>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </DataTemplate>
+            </dx:DXTabControl.ItemTemplate>-->
+            <!--<dx:DXTabControl.ItemContainerStyle>
+                <Style TargetType="dx:DXTabItem">
+                    <Setter Property="Padding" Value="12,3"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Header" Value="{Binding Title}"/>
+                    <Setter Property="Content" Value="{Binding}"/>
+                    <Setter Property="dx:TabControlStretchView.PinMode" Value="{Binding PinMode, Mode=TwoWay}" />
+                </Style>
+            </dx:DXTabControl.ItemContainerStyle>-->
+        </dx:DXTabControl>
+    </Grid>
+</UserControl>

@@ -183,13 +183,20 @@ namespace SQLAppLib
             runspace.Open();
             Pipeline pipeline = runspace.CreatePipeline();
             pipeline.Commands.AddScript(strCmdLine);
+            //pipeline.StateChanged += Pipeline_StateChanged;
             pipeline.Commands.Add("Out-String");
-            
+            //pipeline.Commands.AddScript(" -Confirm: $true");
+
             Collection<PSObject> results = pipeline.Invoke();
             runspace.Close();
             StringBuilder builder = new StringBuilder();
             results.ToList().ForEach(x => builder.AppendLine(x.ToString()));
             return builder.ToString();
+        }
+
+        private static void Pipeline_StateChanged(object sender, PipelineStateEventArgs e)
+        {
+            
         }
     }
 

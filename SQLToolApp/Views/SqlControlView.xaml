@@ -1,0 +1,57 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="SQLToolApp.Views.SqlControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:SQLToolApp.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel x:Name="pnlControl">
+        <StackPanel.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+            <Style TargetType="dxe:ComboBoxEdit">
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+        </StackPanel.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0">Sql Type</Label>
+            <dxe:ComboBoxEdit Grid.Column="1" x:Name="cboSqlType" ItemsSource="{Binding lstSqlType}">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="EditValueChanged" Command="{Binding selectedItemChangeCommand}" CommandParameter="{Binding ElementName=cboSqlType, Path=EditValue}" UseDispatcher="True"/>
+                </dxmvvm:Interaction.Behaviors>
+            </dxe:ComboBoxEdit>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0">Server</Label>
+            <dxe:ComboBoxEdit Grid.Column="1" x:Name="cboServer" ItemsSource="{Binding lstServers}">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="SelectedIndexChanged" Command="{Binding serverSelectedItemChangeCommand}" CommandParameter="{Binding ElementName=cboServer, Path=SelectedIndex}" UseDispatcher="True">
+                        
+                    </dxmvvm:EventToCommand>
+                </dxmvvm:Interaction.Behaviors>
+            </dxe:ComboBoxEdit>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0">Database</Label>
+            <dxe:ComboBoxEdit Grid.Column="1" x:Name="cboDatabase" ItemsSource="{Binding lstDatabase}" DisplayMember="name" ValueMember="name">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="EditValueChanged" Command="{Binding selectedDatabaseChangeCommand}" CommandParameter="{Binding ElementName=cboDatabase, Path=EditValue}" UseDispatcher="True"/>
+                </dxmvvm:Interaction.Behaviors>
+            </dxe:ComboBoxEdit>
+        </Grid>
+    </StackPanel>
+</UserControl>

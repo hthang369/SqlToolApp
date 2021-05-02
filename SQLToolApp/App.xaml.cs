@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,6 +17,10 @@ namespace SQLToolApp
         protected override void OnStartup(StartupEventArgs e)
         {
             SQLAppLib.SQLAppWaitingDialog.ShowDialog();
+            using(Util.FnFunctionList FnFuncs = new Util.FnFunctionList())
+            {
+                ApplicationThemeHelper.ApplicationThemeName = FnFuncs.GetThemeName();
+            }
             base.OnStartup(e);
         }
     }

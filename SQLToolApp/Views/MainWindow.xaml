@@ -1,12 +1,64 @@
-﻿<Window x:Class="SQLToolApp.Views.MainWindow"
+﻿<dx:ThemedWindow xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:Views="clr-namespace:SQLToolApp.Views"  x:Class="SQLToolApp.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SQLToolApp.Views"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid>
-        
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        Title="SQL Tool" Height="500" Width="600" FontSize="15" 
+        x:Name="frmMain"
+        Loaded="ThemedWindow_Loaded" KeyDown="ThemedWindow_KeyDown">
+    <!--<Window.InputBindings>
+        <KeyBinding Key="D1" Modifiers="Alt" Command="{Binding KeyBindingCommand}" CommandParameter="{Binding Path=KeyDown, ElementName=frmMain}"/>
+    </Window.InputBindings>-->
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard Duration="00:05:00" Storyboard.TargetProperty="Opacity">
+                    <DoubleAnimation From="0" To="1"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid RenderTransformOrigin="0.489,0.508">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Views:SqlControlView x:Name="ctrlFrom" Grid.Column="0" Margin="2,0,2,0" />
+            <dx:SimpleButton x:Name="btnVS" Grid.Column="1" Content="&lt;V,S&gt;" Padding="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Views:SqlControlView x:Name="ctrlTo" Grid.Column="2" Margin="2,0,2,0" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <dx:SimpleButton x:Name="btnAdd" Content="Add" Command="{Binding btnAddCommand}" CommandParameter="{Binding ElementName=btnAdd}"/>
+                <dx:SimpleButton x:Name="btnEdit" Content="Edit" Command="{Binding btnEditCommand}" CommandParameter="{Binding ElementName=btnEdit}"/>
+                <dx:SimpleButton x:Name="btnDel" Content="Del" Command="{Binding btnDelCommand}" CommandParameter="{Binding ElementName=btnDel}"/>
+                <dx:SimpleButton x:Name="btnVer" Content="Ver" Command="{Binding btnVerCommand}" CommandParameter="{Binding ElementName=btnVer}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <dx:SimpleButton x:Name="btnCompareData" Content="Compare Data" Command="{Binding btnCompareDataCommand}" CommandParameter="{Binding ElementName=btnCompareData}"/>
+                <dx:SimpleButton x:Name="btnCompare" Content="Compare" Command="{Binding btnCompareCommand}" CommandParameter="{Binding ElementName=btnCompare}"/>
+                <dx:SimpleButton x:Name="btnRefesh" Content="Refesh" Command="{Binding btnRefeshCommand}" CommandParameter="{Binding ElementName=btnRefesh}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <dxg:GridControl x:Name="lstFunction" ItemsSource="{Binding lstFunctions}" SelectedItemChanged="LstFunction_SelectedItemChanged" >
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True" AllowBestFit="True" BestFitMode="AllRows" ShowIndicator="False" PreviewKeyDown="LstFunction_KeyDown" ShowColumnHeaders="False" />
+                </dxg:GridControl.View>
+                <dxg:GridColumn FixedWidth="True" FieldName="Name" Header="Name" ReadOnly="True" ShowInColumnChooser="False" Visible="False"/>
+                <dxg:GridColumn AllowResizing="False" AllowSorting="False" AllowMoving="False" FieldName="Text" Header="Text" ReadOnly="True" ShowInColumnChooser="False" BestFitMode="AllRows" AllowEditing="False"/>
+            </dxg:GridControl>
+        </Grid>
     </Grid>
-</Window>
+</dx:ThemedWindow>

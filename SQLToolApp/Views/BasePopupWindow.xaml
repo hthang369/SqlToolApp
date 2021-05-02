@@ -1,0 +1,29 @@
+﻿<dx:ThemedWindow
+    x:Class="SQLToolApp.Views.BasePopupWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:Views="clr-namespace:SQLToolApp.Views"
+    Title="{Binding Header}"
+    x:Name="frmPopup"
+    >
+
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <dx:DXTabControl Grid.Row="0" x:Name="tabResults" Visibility="{Binding isTabControl}" TabContentCacheMode="CacheAllTabs">
+            <dx:DXTabControl.View>
+                <dx:TabControlStretchView CloseWindowOnSingleTabItemHiding="True" HideButtonShowMode="InActiveTab"/>
+            </dx:DXTabControl.View>
+            <dx:DXTabItem Header="abc">
+                <dx:LoadingDecorator x:Name="waitLoadViewTab" Grid.Row="0">
+                    <Views:PopupView />
+                </dx:LoadingDecorator>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
+        <dx:LoadingDecorator x:Name="waitLoadView" Visibility="{Binding isNoTabControl}" Grid.Row="0">
+            <Views:PopupView />
+        </dx:LoadingDecorator>
+    </Grid>
+</dx:ThemedWindow>
