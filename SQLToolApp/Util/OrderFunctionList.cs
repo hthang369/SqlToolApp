@@ -17,49 +17,49 @@ namespace SQLToolApp.Util
         {
             string cnt = SQLApp.GetIniFile(strFileName, section, serverCnt);
             int index = Convert.ToInt32(cnt);
-            string strDesc = SQLApp.GetIniFile(strFileName, section, ServerDesc + idx);
-            MessageBoxResult result = PromptForm.ShowText("Description", "Description", ref strDesc);
-            if (result == MessageBoxResult.Cancel) return;
-            string strServer = SQLApp.GetIniFile(strFileName, section, ServerName + idx);
-            result = PromptForm.ShowText("Server", "Server", ref strServer);
-            if (result == MessageBoxResult.Cancel) return;
-            string strUser = SQLApp.GetIniFile(strFileName, section, ServerUID + idx);
-            result = PromptForm.ShowText("User", "User", ref strUser);
-            if (result == MessageBoxResult.Cancel) return;
-            string strPass = SQLApp.GetIniFile(strFileName, section, ServerPWD + idx);
-            result = PromptForm.ShowText("Pass", "Pass", ref strPass);
-            if (result == MessageBoxResult.Cancel) return;
-            if (status == "Add")
+            switch (status)
             {
-                if (!string.IsNullOrEmpty(strDesc) && !string.IsNullOrEmpty(strServer) && !string.IsNullOrEmpty(strUser) && !string.IsNullOrEmpty(strPass))
-                {
-                    index += 1;
-                    SQLApp.SetIniFile(strFileName, section, serverCnt, index.ToString());
-                    SQLApp.SetIniFile(strFileName, section, ServerDesc + index, strDesc);
-                    SQLApp.SetIniFile(strFileName, section, ServerName + index, strServer);
-                    SQLApp.SetIniFile(strFileName, section, ServerUID + index, strUser);
-                    SQLApp.SetIniFile(strFileName, section, ServerPWD + index, strPass);
-                    SQLApp.SetIniFile(strFileName, section, ServerDBOld + index, "");
-                }
-            }
-            else if (status == "edit")
-            {
-                if (!string.IsNullOrEmpty(strDesc) && !string.IsNullOrEmpty(strServer) && !string.IsNullOrEmpty(strUser) && !string.IsNullOrEmpty(strPass))
-                {
-                    SQLApp.SetIniFile(strFileName, section, ServerDesc + idx, strDesc);
-                    SQLApp.SetIniFile(strFileName, section, ServerName + idx, strServer);
-                    SQLApp.SetIniFile(strFileName, section, ServerUID + idx, strUser);
-                    SQLApp.SetIniFile(strFileName, section, ServerPWD + idx, strPass);
-                }
-            }
-            else
-            {
-                SQLApp.SetIniFile(strFileName, section, serverCnt, (index - 1).ToString());
-                SQLApp.SetIniFile(strFileName, section, ServerDesc + idx, null);
-                SQLApp.SetIniFile(strFileName, section, ServerName + idx, null);
-                SQLApp.SetIniFile(strFileName, section, ServerUID + idx, null);
-                SQLApp.SetIniFile(strFileName, section, ServerPWD + idx, null);
-                SQLApp.SetIniFile(strFileName, section, ServerDBOld + idx, null);
+                case "Add":
+                case "Edit":
+                    string strDesc = SQLApp.GetIniFile(strFileName, section, ServerDesc + idx);
+                    MessageBoxResult result = PromptForm.ShowText("Description", "Description", ref strDesc);
+                    if (result == MessageBoxResult.Cancel) return;
+                    string strServer = SQLApp.GetIniFile(strFileName, section, ServerName + idx);
+                    result = PromptForm.ShowText("Server", "Server", ref strServer);
+                    if (result == MessageBoxResult.Cancel) return;
+                    string strUser = SQLApp.GetIniFile(strFileName, section, ServerUID + idx);
+                    result = PromptForm.ShowText("User", "User", ref strUser);
+                    if (result == MessageBoxResult.Cancel) return;
+                    string strPass = SQLApp.GetIniFile(strFileName, section, ServerPWD + idx);
+                    result = PromptForm.ShowText("Pass", "Pass", ref strPass);
+                    if (result == MessageBoxResult.Cancel) return;
+
+                    if (!string.IsNullOrEmpty(strDesc) && !string.IsNullOrEmpty(strServer) && !string.IsNullOrEmpty(strUser))
+                    {
+                        if (status == "Add")
+                        {
+                            index += 1;
+                            SQLApp.SetIniFile(strFileName, section, serverCnt, index.ToString());
+                        }
+                        else
+                        {
+                            index = idx;
+                        }
+                        SQLApp.SetIniFile(strFileName, section, ServerDesc + index, strDesc);
+                        SQLApp.SetIniFile(strFileName, section, ServerName + index, strServer);
+                        SQLApp.SetIniFile(strFileName, section, ServerUID + index, strUser);
+                        SQLApp.SetIniFile(strFileName, section, ServerPWD + index, strPass);
+                        SQLApp.SetIniFile(strFileName, section, ServerDBOld + index, "");
+                    }
+                    break;
+                case "Del":
+                    SQLApp.SetIniFile(strFileName, section, serverCnt, (index - 1).ToString());
+                    SQLApp.SetIniFile(strFileName, section, ServerDesc + idx, null);
+                    SQLApp.SetIniFile(strFileName, section, ServerName + idx, null);
+                    SQLApp.SetIniFile(strFileName, section, ServerUID + idx, null);
+                    SQLApp.SetIniFile(strFileName, section, ServerPWD + idx, null);
+                    SQLApp.SetIniFile(strFileName, section, ServerDBOld + idx, null);
+                    break;
             }
         }
 

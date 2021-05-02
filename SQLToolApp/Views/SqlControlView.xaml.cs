@@ -26,5 +26,10 @@ namespace SQLToolApp.Views
             InitializeComponent();
             DataContext = userControlViewModel = new SqlControlViewModel(this);
         }
+
+        public void RefeshConfigConnection(string strType)
+        {
+            userControlViewModel.RefeshConfigServerByType(strType);
+        }
     }
 }

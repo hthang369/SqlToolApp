@@ -91,5 +91,10 @@ namespace SQLToolApp.ViewModels
             catch(Exception ex) { }
             HideWaitIndicator(Parent);
         }
+
+        public void RefeshConfigServerByType(string strType)
+        {
+            ChangeServerBySqlType(strType);
+        }
     }
 }

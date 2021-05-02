@@ -61,7 +61,7 @@ namespace SQLToolApp.ViewModels
             btnRefeshCommand = new RelayCommand<object>((x) => CanExecute(), (x) => ActionCommand(x));
 
             KeyBindingCommand = new RelayCommand<object>((x) => CanExecute(), (x) => KeyBindingActionCommand(x));
-
+            
             LoadMainMenu();
         }
 
@@ -131,10 +131,12 @@ namespace SQLToolApp.ViewModels
             {
                 case "add":
                 case "edit":
+                case "del":
                     int idx = mainWindow.ctrlFrom.cboServer.SelectedIndex;
                     if (idx == -1) idx = 0;
                     OrderFuncs.section = strType;
-                    OrderFuncs.GetConfigConnectSQL(Convert.ToString(btn.Content), idx);
+                    OrderFuncs.GetConfigConnectSQL(Convert.ToString(btn.Content), idx + 1);
+                    mainWindow.ctrlFrom.RefeshConfigConnection(strType);
                     break;
                 case "ver":
                     SQLDBUtil.CurrentDatabase = lstSqlDbConnections["ctrlFrom"];
@@ -144,9 +146,9 @@ namespace SQLToolApp.ViewModels
                     OrderFuncs.CompareDatabase(Util.BaseUtil.GetConnectionType(strType), (mainWindow.DataContext as MainViewModel).lstSqlDbConnections);
                     break;
                 case "refresh":
+                    mainWindow.ctrlFrom.RefeshConfigConnection(strType);
                     break;
             }
-
         }
 
         internal void KeyViewActionCommand(object sender, System.Windows.Input.KeyEventArgs e)

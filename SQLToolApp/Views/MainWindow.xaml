@@ -48,7 +48,7 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
                 <dx:SimpleButton x:Name="btnCompareData" Content="Compare Data" Command="{Binding btnCompareDataCommand}" CommandParameter="{Binding ElementName=btnCompareData}"/>
                 <dx:SimpleButton x:Name="btnCompare" Content="Compare" Command="{Binding btnCompareCommand}" CommandParameter="{Binding ElementName=btnCompare}"/>
-                <dx:SimpleButton x:Name="btnRefesh" Content="Refesh" Command="{Binding btnRefeshCommand}" CommandParameter="{Binding ElementName=btnRefesh}"/>
+                <dx:SimpleButton x:Name="btnRefresh" Content="Refresh" Command="{Binding btnRefeshCommand}" CommandParameter="{Binding ElementName=btnRefresh}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
