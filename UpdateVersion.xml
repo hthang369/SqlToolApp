@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<UpdateVersion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServerPath />
+  <SoftwareName />
+  <TranferMode>FTP</TranferMode>
+  <UpdateItemsList />
+  <VersionCode>1.0.0.0</VersionCode>
+  <VersionDate>2020-05-31T15:13:08.9129301+07:00</VersionDate>
+  <VersionDesc />
+  <VersionName>1.0.0.0</VersionName>
+</UpdateVersion>
