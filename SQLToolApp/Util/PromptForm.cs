@@ -17,7 +17,7 @@ namespace SQLToolApp.Util
                                         InputBoxValidation validation)
         {
             ViewModels.PopupViewModel popupView = new ViewModels.PopupViewModel();
-            Views.BasePopupWindow popup = new Views.BasePopupWindow() { DataContext = popupView, Height = 150, Width = 600 };
+            Views.BasePopupWindow popup = new Views.BasePopupWindow() { DataContext = popupView, Height = 150, Width = 600, Owner = _frmParent, WindowStartupLocation = WindowStartupLocation.CenterOwner };
             popupView.Header = title;
             popupView.Title = promptText;
             popupView.valueReturn = value;

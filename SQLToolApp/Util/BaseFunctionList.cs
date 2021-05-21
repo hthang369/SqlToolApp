@@ -190,32 +190,69 @@ namespace SQLToolApp.Util
                 for (int i = 1; i <= iCnt; i++)
                 {
                     string param = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "Name", i)));
+                    string strParamDesc = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "Desc", i)));
                     strValue = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "Val", i)));
                     string strValList = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "ValList", i)));
                     string strListFolder = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "ListFolder", i)));
+                    string strListFile = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "ListFile", i)));
+                    string strDefaultValue = Convert.ToString(SQLApp.GetIniFile(strFileCfgScript, strDynPara, string.Concat(functionObj.Name, "DefaultValue", i)));
                     MessageBoxResult result;
+                    string strTitle = string.IsNullOrEmpty(strParamDesc) ? param : strParamDesc;
                     if (!string.IsNullOrEmpty(strListFolder))
                     {
                         string sourceUrl = SQLApp.GetIniFile(strFileName, "SourceCode", "SourceUrl");
                         string[] lstModules = Directory.GetDirectories(string.Concat(sourceUrl, "\\", strListFolder));
                         string[] lstModuleNames = lstModules.ToList().Select(x => new DirectoryInfo(x).Name).ToArray();
-                        result = PromptForm.ShowCombobox("Dynamic parameter for script: " + functionObj.Text, param, lstModuleNames, ref strValue);
+                        result = PromptForm.ShowCombobox("Dynamic parameter for script: " + functionObj.Text, strTitle, lstModuleNames, ref strValue);
+                    }
+                    else if (!string.IsNullOrEmpty(strListFile))
+                    {
+                        string sourceUrl = SQLApp.GetIniFile(strFileName, "SourceCode", "SourceUrl");
+                        string[] lstFiles = Directory.GetFiles(string.Concat(sourceUrl, "\\", strListFile));
+                        string[] lstFileNames = lstFiles.ToList().Select(x => new DirectoryInfo(x).Name).ToArray();
+                        result = PromptForm.ShowCombobox("Dynamic parameter for script: " + functionObj.Text, strTitle, lstFileNames, ref strValue);
                     }
                     else if (!string.IsNullOrEmpty(strValList))
-                        result = PromptForm.ShowCombobox("Dynamic parameter for script: " + functionObj.Text, param, strValList.Split('|'), ref strValue);
+                    {
+                        string[] arrSource = strValList.Split('|');
+                        if ((strValList.StartsWith("SHOW") || strValList.StartsWith("SELECT")) && arrSource.Length == 1)
+                        {
+                            List<string> lstDBSystems = (new string[] { "mysql", "information_schema", "performance_schema" }).ToList();
+                            arrSource = SQLDBUtil.GetDataTable(strValList).Rows.Cast<DataRow>().Where(x =>
+                            {
+                                return (lstDBSystems.IndexOf(x[0].ToString()) == -1);
+                            }).Select(x => x[0].ToString()).ToArray();
+                        }
+                        result = PromptForm.ShowCombobox("Dynamic parameter for script: " + functionObj.Text, strTitle, arrSource, ref strValue);
+                    }
+                    else if (string.IsNullOrEmpty(strDefaultValue))
+                        result = PromptForm.ShowText("Dynamic parameter for script: " + functionObj.Text, strTitle, ref strValue);
                     else
-                        result = PromptForm.ShowText("Dynamic parameter for script: " + functionObj.Text, param, ref strValue);
+                        result = MessageBoxResult.OK;
+
                     if (result == MessageBoxResult.Cancel)
                     {
                         return (string.IsNullOrEmpty(param)) ? strScript : string.Empty;
                     }
-                    if (!string.IsNullOrEmpty(param))
+                    if (!string.IsNullOrEmpty(param) && string.IsNullOrEmpty(strDefaultValue))
                         strScript = strScript.Replace(param, strValue);
                     if (!string.IsNullOrEmpty(strValList) && !string.IsNullOrEmpty(strValue))
                         strScript = string.Concat(strScript, " ", strValue);
+                    if (!string.IsNullOrEmpty(strDefaultValue))
+                        strScript = strScript.Replace(param, strDefaultValue);
                 }
             }
             return strScript;
+        }
+
+        private string getValue(object strVal)
+        {
+            if (strVal is String)
+                return string.Format("'{0}'", strVal);
+            else if (strVal is DateTime)
+                return string.Format("'{0}'", strVal);
+            else
+                return strVal.ToString();
         }
 
         public ViewModels.ResultViewModel GetResultPopupView()

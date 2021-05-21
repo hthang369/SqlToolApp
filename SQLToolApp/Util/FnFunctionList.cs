@@ -213,5 +213,12 @@ namespace SQLToolApp.Util
             AddEventByView(view.reditData, popupView, Key.G, ModifierKeys.Control);
             ShowPopupViewModal(popupView, view);
         }
+
+        public void SettingDbConfig(Window frmParent)
+        {
+            Views.DatabaseConfigView view = new Views.DatabaseConfigView();
+            DatabaseConfigViewModel popupView = new DatabaseConfigViewModel(view);
+            ShowPopupViewModal(popupView, view);
+        }
     }
 }
