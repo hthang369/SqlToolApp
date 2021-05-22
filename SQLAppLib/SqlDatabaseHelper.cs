@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -92,6 +93,15 @@ namespace SQLAppLib
                     };
 
                     _connectionString = mysqlBuilder.ConnectionString;
+                    break;
+                case SqlDbConnectionType.Sqlite:
+                    var builder = new SQLiteConnectionStringBuilder
+                    {
+                        DataSource = strServer,
+                        Version = 3
+                    };
+
+                    _connectionString = builder.ConnectionString;
                     break;
                 default:
                     SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder

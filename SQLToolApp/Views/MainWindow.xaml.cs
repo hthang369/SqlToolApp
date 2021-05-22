@@ -81,12 +81,21 @@ namespace SQLToolApp.Views
 
         private void LstFunction_KeyDown(object sender, KeyEventArgs e)
         {
+            
             mainViewModel.KeyViewActionCommand(sender, e);
         }
 
         private void LstFunction_SelectedItemChanged(object sender, DevExpress.Xpf.Grid.SelectedItemChangedEventArgs e)
         {
 
+        }
+
+        private void FrmMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DXMessageBox.Show("Bạn có chắc muốn thoát?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

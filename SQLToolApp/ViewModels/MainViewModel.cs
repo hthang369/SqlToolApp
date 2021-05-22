@@ -153,6 +153,7 @@ namespace SQLToolApp.ViewModels
 
         internal void KeyViewActionCommand(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            
             switch (e.Key)
             {
                 case Key.Enter:

@@ -5,7 +5,7 @@
         xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
         Title="SQL Tool" Height="500" Width="600" FontSize="15" 
         x:Name="frmMain"
-        Loaded="ThemedWindow_Loaded" KeyDown="ThemedWindow_KeyDown">
+        Loaded="ThemedWindow_Loaded" KeyDown="ThemedWindow_KeyDown" Closing="FrmMain_Closing">
     <!--<Window.InputBindings>
         <KeyBinding Key="D1" Modifiers="Alt" Command="{Binding KeyBindingCommand}" CommandParameter="{Binding Path=KeyDown, ElementName=frmMain}"/>
     </Window.InputBindings>-->
@@ -17,6 +17,7 @@
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
+        
     </Window.Triggers>
     <Grid RenderTransformOrigin="0.489,0.508">
         <Grid.RowDefinitions>

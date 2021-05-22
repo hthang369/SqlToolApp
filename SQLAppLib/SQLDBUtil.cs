@@ -24,6 +24,7 @@ namespace SQLAppLib
         }
         public static string GetCurrentDatabaseName()
         {
+            
             DataTable dt = GetDataTable("SELECT DB_NAME()");
             if (dt != null && dt.Rows.Count > 0)
                 return Convert.ToString(dt.Rows[0][0]);
