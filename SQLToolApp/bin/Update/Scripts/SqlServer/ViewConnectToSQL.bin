@@ -1,0 +1,3 @@
+¸select client_net_address, local_net_address,connect_time,program_name,hostname,loginame,DB_NAME(dbid),status
+from sys.sysprocesses 
+join sys.dm_exec_connections on session_id = spid
