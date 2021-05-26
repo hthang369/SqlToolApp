@@ -177,6 +177,47 @@ namespace SQLToolApp.Util
             }
         }
 
+        public void MoveFileFolder(Window frmParent)
+        {
+            string sourceUrl = GetSourceCodePath();
+            SQLAppWaitingDialog.ShowDialog();
+            List<string> funcKeysIni = SQLApp.GetKeysIniFile(strPath, "FileToFolder");
+            foreach (string item in funcKeysIni)
+            {
+                string strText = SQLApp.GetIniFile(strPath, "FileToFolder", item);
+
+                string[] arr = item.Split('.');
+
+                DirectoryInfo directory = Directory.CreateDirectory(sourceUrl + "/" + string.Join("/", arr));
+
+                foreach (string file in strText.Split('|'))
+                {
+                    string[] lstFile = Directory.GetFiles(sourceUrl + "/" + arr.FirstOrDefault(), file, SearchOption.AllDirectories);
+
+                    foreach (var filePath in lstFile)
+                    {
+                        string[] lines = File.ReadAllLines(filePath);
+
+                        for (int i = 0; i < lines.Length - 1; i++)
+                        {
+                            foreach (string item1 in funcKeysIni)
+                            {
+                                string[] arr1 = item1.Split('.');
+                                if (lines[i].Contains("App\\" + arr1.FirstOrDefault()))
+                                {
+                                    lines[i].Replace("App\\" + arr1.FirstOrDefault(), "App\\" + string.Join("\\", arr1));
+                                }
+                            }
+                        }
+                        File.WriteAllLines(filePath, lines);
+
+                        File.Move(filePath, directory.FullName);
+                    }
+                }
+            }
+            SQLAppWaitingDialog.HideDialog();
+        }
+
         public void ExecuteScriptFile(Window frmParent)
         {
             OpenFileDialog openFile = new OpenFileDialog();
