@@ -111,6 +111,7 @@
     <Compile Include="Util\HotKeyInfo.cs" />
     <Compile Include="Util\OrderFunctionList.cs" />
     <Compile Include="Util\PromptForm.cs" />
+    <Compile Include="Util\RouteInfo.cs" />
     <Compile Include="Util\Win32Processes.cs" />
     <Compile Include="ViewModels\BasePopupViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -218,4 +219,8 @@
     <Resource Include="db_tool.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\bin\Update\*.*" "$(ProjectDir)bin\$(ConfigurationName)"
+xcopy "$(ProjectDir)\bin\Update\Scripts\*.*" "$(ProjectDir)bin\$(ConfigurationName)\\Scripts"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

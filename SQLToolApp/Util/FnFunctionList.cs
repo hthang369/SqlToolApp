@@ -120,8 +120,7 @@ namespace SQLToolApp.Util
             if (strType.Equals("table"))
             {
                 string[] arr = output.Split('\n');
-                DataTable dtSoure = new DataTable();
-                dtSoure.TableName = "Route List";
+                DataTable dtSoure = new DataTable("Route List");
                 int idx = 0;
                 arr.ToList().ForEach(r =>
                 {
@@ -141,6 +140,14 @@ namespace SQLToolApp.Util
                         idx++;
                     }
                 });
+                ShowResultData(null, dtSoure);
+            }
+            else if (strType.Equals("table_json"))
+            {
+                DataTable dtSoure = new DataTable("Route List");
+                typeof(RouteInfo).GetProperties().ToList().ForEach(c => dtSoure.Columns.Add(c.Name));
+                List<RouteInfo> lstRoutes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RouteInfo>>(output);
+                lstRoutes.ForEach(r => dtSoure.Rows.Add(r.Domain, r.Method, r.URI, r.Middleware, r.Name, r.Action));
                 ShowResultData(null, dtSoure);
             }
             else
